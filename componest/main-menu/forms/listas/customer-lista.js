@@ -1,5 +1,6 @@
 import { getDataAll,searchDataById,opc } from "../../../../apis/customer-api";
 export class CustomerLista extends HTMLElement{
+    idUsr=0;
     constructor(){
         super();
         this.render();
@@ -8,7 +9,7 @@ export class CustomerLista extends HTMLElement{
     }
     render(){
         this.innerHTML=/* html*/ `
-        <table class="table">
+        <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -59,18 +60,28 @@ export class CustomerLista extends HTMLElement{
                                                       </div>
                                                   </div>
                                                   <div class="row g-3">
-                                                      <div class="col-4">
-                                                          <label for="email" class="form-label">Email cliente</label>
-                                                          <input type="email" class="form-control" id="email" name="email">
-                                                      </div>
-                                                      <div class="col-4">
-                                                          <label for="telefono" class="form-label">Nro Movil</label>
-                                                          <input type="text" class="form-control" id="telefono" name="telefono">                  
-                                                      </div>
-                                                      <div class="col-4">
-                                                          <label for="fechanac" class="form-label">Fecha Nacimiento</label>
-                                                          <input type="date" class="form-control" id="fechanac" name="fechanac">                  
-                                                      </div>
+                                                    <div class="col-4">
+                                                        <label for="telefono" class="form-label">Nro Movil</label>
+                                                        <input type="text" class="form-control" id="telefono" name="telefono">                  
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label for="fechanac" class="form-label">Fecha Nacimiento</label>
+                                                     <input type="date" class="form-control" id="fechanac" name="fechanac">                  
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label for="ciudadO" class="form-label">Ciudad Origen</label>
+                                                        <input type="text" class="form-control" id="ciudad" name="ciudad">                  
+                                                    </div>    
+                                                    <div class="row g-3">
+                                                        <div class="col-4">
+                                                            <label for="paisOri" class="form-label">Pais Origen</label>
+                                                            <input type="text" class="form-control" id="pais" name="pais">
+                                                        </div>
+                                                        <div class="col-4">
+                                                      <label for="email" class="form-label">Email cliente</label>
+                                                      <input type="email" class="form-control" id="email" name="email">
+                                                        </div>
+
                                                       <div class="container mt-4 text-center" >
                                                           <input type="submit" data-accion="PUT" class="btn btn-warning" value="Editar">
                                                       </div>
@@ -93,7 +104,7 @@ export class CustomerLista extends HTMLElement{
     abrirModal = () =>{
         var myModal = document.querySelector('#putCliente')
         myModal.addEventListener('shown.bs.modal', function () {
-            //myInput.focus()
+            
         })
     }
     requestApiGetCliente = () =>{
@@ -118,9 +129,11 @@ export class CustomerLista extends HTMLElement{
             <td>${clientes.cc}</td>
             <td>${clientes.nombres}</td>
             <td>${clientes.apellidos}</td>
-            <td>${clientes.email}</td>
             <td>${clientes.telefono}</td>
             <td>${clientes.fechanac}</td>
+            <td>${clientes.ciudad}</td>
+            <td>${clientes.pais}</td>
+            <td>${clientes.email}</td>
 
             <td>
                     <a class="btn btn-success " data-bs-toggle="modal" data-bs-target="#putCliente" id="putData" data-idcli='${clientes.id}'><i class='bx bx-edit-alt icono' data-idcli='${clientes.id}'></i></a>
@@ -150,18 +163,21 @@ export class CustomerLista extends HTMLElement{
     loadDataFrm(data){
         
         const myForm = document.querySelector("#frmData");
-        const {createdAt,cc,nombres,apellidos,email,telefono,fechanac,id} = data;
+        const {createdAt,cc,nombres,apellidos,telefono,fechanac,ciudad,pais,email,id} = data;
         const frm = new FormData(myForm);
         frm.set("createdAt",createdAt);
         frm.set("cc",cc);
         frm.set("nombres",nombres);
         frm.set("apellidos",apellidos);
-        frm.set("email",email);
         frm.set("telefono",telefono);
         frm.set("fechanac",fechanac);
-        // Itera a través de los pares clave-valor de los datos
+        frm.set("ciudad",ciudad);
+        frm.set("pais",pais);
+        frm.set("email",email);
+
+        
         for (var pair of frm.entries()) {
-            // Establece los valores correspondientes en el formulario
+           
             myForm.elements[pair[0]].value = pair[1];
         }
 
