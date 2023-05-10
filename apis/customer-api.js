@@ -1,3 +1,6 @@
+const urlX = "http://localhost:3000/Clientes"
+
+
 const opc = {
     "GET": () => getDataAll(),
     "PUT": (data,id) => putData(data,id),
@@ -16,32 +19,45 @@ const getDataAll = async()=>{
     let res = await ( await fetch("http://localhost:3000/Clientes",config)).json();
     return res;
 }
-const postData = async(data)=>{
-    console.log('ddddd');
+/* const postData = async(data)=>{
     config.method = "POST";
     config.body = JSON.stringify(data);
     let res = await ( await fetch("http://localhost:3000/Clientes",config)).json();
     console.log(res);
+} */
+
+const postData = async(data)=>{
+    try {
+        await fetch(urlX , {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    } catch (error) {
+        console.log(error);
+    }
 }
 const putData = async(data,id)=>{
     config.method = "PUT";
     config.body = JSON.stringify(data);
-    let res = await ( await fetch(`http://localhost:3000/Rutas${id}`,config)).json();
+    let res = await ( await fetch(`http://localhost:3000/Clientes${id}`,config)).json();
     console.log(res);
 }
 const deleteData = async(id)=>{
     config.method = "DELETE";
-    let res = await ( await fetch(`http://localhost:3000/customer/${id}`,config)).json();
+    let res = await ( await fetch(`http://localhost:3000/Clientes/${id}`,config)).json();
     console.log(res);
 }
 const searchData = async(data)=>{
     config.method = "GET";
-    let res = await ( await fetch(`http://localhost:3000/Flotas=${Object.values(data).join("")}`,config)).json();
+    let res = await ( await fetch(`http://localhost:3000/Clientes=${Object.values(data).join("")}`,config)).json();
     console.log(res);
 }
 const searchDataById = async(id)=>{
     config.method = "GET";
-    let res = await ( await fetch(`http://localhost:3000/Compras${id}`,config)).json();
+    let res = await ( await fetch(`http://localhost:3000/Clientes${id}`,config)).json();
     console.log(id);
     return res;
 }

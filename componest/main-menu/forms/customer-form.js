@@ -1,4 +1,4 @@
-import { postData,putData,opc } from "../../../apis/customer-api";
+import { postData,putData,opc } from "../../../apis/customer-api.js";
 export class CustomerForm extends HTMLElement{
 
     constructor(){
@@ -73,3 +73,43 @@ export class CustomerForm extends HTMLElement{
     }
 }
 customElements.define("customer-form",CustomerForm);
+
+(function(){
+
+    const enviar = document.querySelector('#frmData')
+    enviar.addEventListener('submit' , agregarData)
+
+    function agregarData() {
+        const identificacion = document.querySelector('#cc').value;
+        const nombres = document.querySelector('#nombres').value;
+        const apellidos = document.querySelector('#apellidos').value;
+        const telefono = document.querySelector('#telefono').value;
+        const fechaNac = document.querySelector('#fechaNac').value;
+        const ciudadOrig = document.querySelector('#ciudadOrig').value;
+        const paisOrig = document.querySelector('#paisOrig').value;
+        const email = document.querySelector('#email').value;
+        
+        const dato = {
+            identificacion,
+            nombres,
+            apellidos,
+            telefono,
+            fechaNac,
+            ciudadOrig,
+            paisOrig,
+            email
+        }
+
+        if (validar(dato)) {
+            alert('Todos los campos son necesarios');
+            return;
+        }
+        postData(dato)
+
+
+        function validar(obj) {
+            return !Object.values(obj).every(dato => dato !== "");
+        }
+    }
+
+})()

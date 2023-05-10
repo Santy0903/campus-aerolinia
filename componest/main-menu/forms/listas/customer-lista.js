@@ -1,11 +1,11 @@
-import { getDataAll,searchDataById,opc } from "../../../../apis/customer-api";
+import { getDataAll,searchDataById,opc } from "../../../../apis/customer-api.js";
 export class CustomerLista extends HTMLElement{
     idUsr=0;
     constructor(){
         super();
         this.render();
         this.requestApiGetCliente();
-        this.AbrilModal();
+        /* this.AbrirModal(); */
     }
     render(){
         this.innerHTML=/* html*/ `
@@ -101,12 +101,12 @@ export class CustomerLista extends HTMLElement{
   </div>
         `
     }
-    abrirModal = () =>{
+    /* abrirModal = () =>{
         var myModal = document.querySelector('#putCliente')
         myModal.addEventListener('shown.bs.modal', function () {
             
         })
-    }
+    } */
     requestApiGetCliente = () =>{
         getDataAll()
             .then((result)=>{
@@ -126,14 +126,14 @@ export class CustomerLista extends HTMLElement{
         let listaHTML = /* html */ `
         <tr>
             <td>${clientes.id}</td>
-            <td>${clientes.cc}</td>
             <td>${clientes.nombres}</td>
             <td>${clientes.apellidos}</td>
             <td>${clientes.telefono}</td>
-            <td>${clientes.fechanac}</td>
-            <td>${clientes.ciudad}</td>
-            <td>${clientes.pais}</td>
+            <td>${clientes.fechaNac}</td>
+            <td>${clientes.ciudadOrig}</td>
+            <td>${clientes.paisOrig}</td>
             <td>${clientes.email}</td>
+
 
             <td>
                     <a class="btn btn-success " data-bs-toggle="modal" data-bs-target="#putCliente" id="putData" data-idcli='${clientes.id}'><i class='bx bx-edit-alt icono' data-idcli='${clientes.id}'></i></a>
